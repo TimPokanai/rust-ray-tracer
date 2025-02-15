@@ -1,9 +1,11 @@
 use image::{RgbImage, Rgb};
+use std::io::{stdout, Write};
 
 fn main() {
     // Image
     let image_width = 256;
     let image_height = 256;
+    let total_pixels = image_width * image_height;
 
     // Rendering
     let mut image = RgbImage::new(image_width, image_height);
@@ -17,8 +19,16 @@ fn main() {
 
             let pixel = Rgb([r, g, b]);
             image.put_pixel(x, y, pixel);
+
+            // Real time progress bar
+            let progress = ((y * image_width + x) as f32 / total_pixels as f32) * 100.0;
+
+            print!("\rProgress: [{:<50}] {:.2}% ", "=".repeat((progress / 2.0) as usize), progress);
+            stdout().flush().unwrap();
         }
     }
+    print!("\r{:<100}", "");
+    println!();
 
     image.save("output.png").expect("Failed to save image");
 
