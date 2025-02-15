@@ -1,4 +1,4 @@
-use std::ops::{Add, Sub, Mul, Div, Neg};
+use std::ops::{Add, AddAssign, Sub, Mul, Div, Neg, Index, IndexMut};
 use std::fmt;
 
 #[derive(Clone, Copy, Debug)]
@@ -30,10 +30,46 @@ impl Vec3 {
 
 }
 
+// Overriding Vec3 negation
 impl Neg for Vec3 {
     type Output = Vec3;
 
     fn neg(self) -> Self::Output {
         Vec3 { e: [-self.e[0], -self.e[1], -self.e[2]] }
+    }
+}
+
+// Overriding Vec3 immutable indexing
+impl Index<usize> for Vec3 {
+    type Output = f64;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        if index < 3 {
+            &self.e[index]
+        }
+        else {
+            panic!("Index {} out of bounds for Vec3", index);
+        }
+    }
+}
+
+// Overriding Vec3 mutable indexing
+impl IndexMut<usize> for Vec3 {
+    fn index_mut(&mut self, index: usize) -> &mut f64 {
+        if index < 3 {
+            &mut self.e[index]
+        }
+        else {
+            panic!("Index {} out of bounds for Vec3", index);
+        }
+    }
+}
+
+// Overriding Vec3 add assign
+impl AddAssign for Vec3 {
+    fn add_assign(&mut self, v: Vec3) {
+        self.e[0] += v.e[0];
+        self.e[1] += v.e[1];
+        self.e[2] += v.e[2];
     }
 }
