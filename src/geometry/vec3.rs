@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Sub, Mul, Div, Neg, Index, IndexMut};
+use std::ops::{AddAssign, MulAssign, DivAssign, Neg, Index, IndexMut};
 use std::fmt;
 
 #[derive(Clone, Copy, Debug)]
@@ -71,5 +71,28 @@ impl AddAssign for Vec3 {
         self.e[0] += v.e[0];
         self.e[1] += v.e[1];
         self.e[2] += v.e[2];
+    }
+}
+
+// Overriding Vec3 mult assign
+impl MulAssign<f64> for Vec3 {
+    fn mul_assign(&mut self, t: f64) {
+        self.e[0] *= t;
+        self.e[1] *= t;
+        self.e[2] *= t;
+    }
+}
+
+// Overriding Vec3 div assign
+impl DivAssign<f64> for Vec3 {
+    fn div_assign(&mut self, t: f64) {
+        if t == 0.0 {
+            panic!("Cannot divide by zero!");
+        }
+        else {
+            self.e[0] /= t;
+            self.e[1] /= t;
+            self.e[2] /= t;
+        }
     }
 }
