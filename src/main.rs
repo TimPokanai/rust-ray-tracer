@@ -1,3 +1,7 @@
+use crate::geometry::vec3::Vec3;
+
+pub mod geometry;
+
 use image::{RgbImage, Rgb};
 use std::io::{stdout, Write};
 
