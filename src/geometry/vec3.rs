@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Sub, MulAssign, DivAssign, Neg, Index, IndexMut};
+use std::ops::{Add, AddAssign, Sub, Mul, MulAssign, Div, DivAssign, Neg, Index, IndexMut};
 use std::fmt;
 
 #[derive(Clone, Copy, Debug)]
@@ -125,6 +125,50 @@ impl Sub for Vec3 {
             self.e[1] - v.e[1], 
             self.e[2] - v.e[2]
         )
+    }
+}
+
+// Overriding Vec3 mul
+impl Mul for Vec3 {
+    type Output = Vec3;
+
+    fn mul(self, v: Vec3) -> Vec3 {
+        Vec3::new(
+            self.e[0] * v.e[0], 
+            self.e[1] * v.e[1], 
+            self.e[2] * v.e[2]
+        )
+    }
+}
+
+// Overriding Vec3 mul for scalar doubles, (Vec3 * f64)
+impl Mul<f64> for Vec3 {
+    type Output = Vec3;
+
+    fn mul(self, t: f64) -> Vec3 {
+        Vec3::new(
+            self.e[0] * t, 
+            self.e[1] * t, 
+            self.e[2] * t
+        )
+    }
+}
+
+// (f64 * Vec3)
+impl Mul<Vec3> for f64 {
+    type Output = Vec3;
+
+    fn mul(self, v: Vec3) -> Vec3 {
+        v * self
+    }
+}
+
+// Overriding Vec3 div for scalar doubles
+impl Div<f64> for Vec3 {
+    type Output = Vec3;
+
+    fn div(self, t: f64) -> Vec3 {
+        self * (1.0 / t)
     }
 }
 
