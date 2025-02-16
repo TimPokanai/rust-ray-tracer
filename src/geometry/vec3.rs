@@ -1,4 +1,4 @@
-use std::ops::{AddAssign, MulAssign, DivAssign, Neg, Index, IndexMut};
+use std::ops::{Add, AddAssign, Sub, MulAssign, DivAssign, Neg, Index, IndexMut};
 use std::fmt;
 
 #[derive(Clone, Copy, Debug)]
@@ -28,6 +28,13 @@ impl Vec3 {
         self.e[2]
     }
 
+    pub fn length(&self) -> f64 {
+        self.length_squared().sqrt()
+    }
+        
+    pub fn length_squared(&self) -> f64 {
+        self.e[0] * self.e[0] + self.e[1] * self.e[1] + self.e[2] * self.e[2]
+    }
 }
 
 // Overriding Vec3 negation
@@ -96,3 +103,36 @@ impl DivAssign<f64> for Vec3 {
         }
     }
 }
+
+// Overriding Vec3 add
+impl Add for Vec3 {
+    type Output = Vec3;
+    fn add(self, v: Vec3) -> Vec3 {
+        Vec3::new(
+            self.e[0] + v.e[0], 
+            self.e[1] + v.e[1], 
+            self.e[2] + v.e[2]
+        )
+    }
+}
+
+// Overriding Vec3 sub
+impl Sub for Vec3 {
+    type Output = Vec3;
+    fn sub(self, v: Vec3) -> Vec3 {
+        Vec3::new(
+            self.e[0] - v.e[0], 
+            self.e[1] - v.e[1], 
+            self.e[2] - v.e[2]
+        )
+    }
+}
+
+// Output formatter
+impl fmt::Display for Vec3 {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{} {} {}", self.e[0], self.e[1], self.e[2])
+    }
+}
+
+pub type Point3 = Vec3;

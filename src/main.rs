@@ -1,4 +1,4 @@
-use crate::geometry::vec3::Vec3;
+use crate::geometry::vec3::{Vec3, Point3};
 
 pub mod geometry;
 
@@ -37,4 +37,17 @@ fn main() {
     image.save("output.png").expect("Failed to save image");
 
     println!("Image saved as output.png");
+
+    // Tests
+    let v = Vec3::new(1.0, 2.0, 3.0);
+    println!("{}", v.length_squared());
+    println!("{}", v.length());
+    println!("{}", v);
+    let p = Point3::new(2.0, 2.0, 4.0);
+    println!("{}", p);
+    let u = Vec3::new(1.0, 0.0, 1.0);
+    let w = v + u;
+    println!("{}", w);
+    let x = w - u;
+    println!("{}", x);
 }
