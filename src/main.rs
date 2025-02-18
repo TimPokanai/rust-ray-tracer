@@ -1,4 +1,4 @@
-use crate::geometry::vec3::{Vec3, Point3};
+use crate::geometry::vec3::{Vec3, Point3, dot, cross, unit_v};
 
 pub mod geometry;
 
@@ -50,4 +50,8 @@ fn main() {
     println!("{}", w);
     let x = w - u;
     println!("{}", x);
+
+    println!("{}", dot(p, u));
+    println!("{}", cross(p, u));
+    println!("{}", unit_v(x));
 }
